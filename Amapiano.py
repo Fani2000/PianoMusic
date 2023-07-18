@@ -22,24 +22,27 @@ class AmapionoYoutube:
         self.listOfChannels = listOfChannels
 
     def initialize(self):
-        self.__streamsBasedOnDjs()
+        self.streams = self.__streamsBasedOnDjs()
+        if len(self.streams) > 0:
+            # TODO: 1. Download the streams
+            # TODO: 2. Convert the stream into mp3 
+            # TODO: 3. 
+            pass
 
     def __getStreams(self, streamSearchTerm):
         streams = []
         query = Search(streamSearchTerm)
-        for i in range(len(query.results)):
-            id = query.results[i].video_id
-            youtube_url = f""
-            # stream = query.results[i].streams.get_by_itag(22)
-            # # print(stream)
-            # yt = YouTube(stream.url, allow_oauth_cache=True,use_oauth=True)
-            # print(yt.age_restricted)
-            # # print(stream)
-            # is_age_restricted = yt.age_restricted
-
-            # if is_age_restricted != True:
-            #     streams.append(yt)
-            #     print(yt)
+        results_length = len(query.results)
+        i = 0
+        while i < results_length:
+            try:
+                stream = query.results[i].streams.get_by_itag(22)
+                streams.append(stream)
+            except Exception as error:
+                print(error)
+                print('Moving to the next i.')
+            finally:
+                i += 1
 
         return streams
 
@@ -52,7 +55,6 @@ class AmapionoYoutube:
             dj = self.listOfDjs[i]
             dj_streams = self.__getStreams(dj)
             streams.extend(dj_streams)
-        print(streams)
         return streams
 
     def __streamsBasedOnChannels(self):
