@@ -2,3 +2,4 @@ Flask
 pytube
 pytest
 flake8
+requests
