@@ -23,11 +23,13 @@ class AmapionoYoutube:
 
     def initialize(self):
         self.streams = self.__streamsBasedOnDjs()
+        print(self.streams)
         if len(self.streams) > 0:
             # TODO: 1. Download the streams
+            for stream in self.streams:
+                print(stream)
             # TODO: 2. Convert the stream into mp3 
             # TODO: 3. 
-            pass
 
     def __getStreams(self, streamSearchTerm):
         streams = []
